@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starbnails - Panel de Administración</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./admin.css">
+    <script src="./admin.js"></script>
+
+    <!-- shared -->
+    <script src="../shared/storage.js"></script>
+    <script src="../shared/realtime.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header del Panel Admin -->
+        <header class="admin-header">
+            <div class="admin-logo">
+                <h1><i class="fas fa-crown"></i> Panel de Administración</h1>
+                <p>Starbnails - Gestión de turnos</p>
+            </div>
+            <div class="admin-info">
+                <div class="info-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <div>
+                        <h4>Turnos Hoy</h4>
+                        <p id="today-bookings">0</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-ban"></i>
+                    <div>
+                        <h4>Días Bloqueados</h4>
+                        <p id="blocked-days-count">0</p>
+                    </div>
+                </div>
+                <button id="logout-btn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </header>
+
+        <!-- Contenido Principal -->
+        <main class="admin-main">
+            <!-- Navegación -->
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#calendar-section" class="nav-link active" data-section="calendar"><i class="fas fa-calendar-alt"></i> Calendario</a></li>
+                    <li><a href="#hours-section" class="nav-link" data-section="hours"><i class="fas fa-clock"></i> Horarios</a></li>
+                    <li><a href="#bookings-section" class="nav-link" data-section="bookings"><i class="fas fa-list-alt"></i> Turnos</a></li>
+                    <li><a href="#settings-section" class="nav-link" data-section="settings"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </nav>
+
+            <!-- Sección del Calendario -->
+            <section id="calendar-section" class="admin-section active">
+                <div class="section-header">
+                    <h2><i class="fas fa-calendar-alt"></i> Gestión de Calendario</h2>
+                    <p>Bloquea y desbloquea días completos</p>
+                </div>
+                
+                <div class="calendar-admin-controls">
+                    <div class="month-navigation">
+                        <button id="admin-prev-month"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="admin-current-month">Mes actual</h3>
+                        <button id="admin-next-month"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-actions">
+                        <button id="block-day-btn" class="btn-action btn-danger">
+                            <i class="fas fa-ban"></i> Bloquear día seleccionado
+                        </button>
+                        <button id="unblock-day-btn" class="btn-action btn-success">
+                            <i class="fas fa-check-circle"></i> Desbloquear día seleccionado
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="admin-calendar" id="admin-calendar"></div>
+                
+                <div class="selected-day-admin">
+                    <h4>Día seleccionado: <span id="admin-selected-day">Ninguno</span></h4>
+                    <div class="day-details" id="admin-day-details">
+                        <p>Selecciona un día en el calendario para ver detalles</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Horarios -->
+            <section id="hours-section" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clock"></i> Gestión de Horarios</h2>
+                    <p>Configura los horarios disponibles por día</p>
+                </div>
+                
+                <div class="hours-management">
+                    <div class="day-selector">
+                        <h3>Selecciona un día</h3>
+                        <div class="day-buttons">
+                            <button class="day-btn active" data-day="monday">Lunes</button>
+                            <button class="day-btn" data-day="tuesday">Martes</button>
+                            <button class="day-btn" data-day="wednesday">Miércoles</button>
+                            <button class="day-btn" data-day="thursday">Jueves</button>
+                            <button class="day-btn" data-day="friday">Viernes</button>
+                            <button class="day-btn" data-day="saturday">Sábado</button>
+                            <button class="day-btn" data-day="sunday">Domingo</button>
+                        </div>
+                    </div>
+                    
+                    <div class="hours-editor">
+                        <div class="current-day-info">
+                            <h4>Horarios para: <span id="current-day-name">Lunes</span></h4>
+                            <p id="current-day-status" class="status-open">Abierto</p>
+                        </div>
+                        
+                        <div class="hours-list-container">
+                            <h5>Horarios configurados:</h5>
+                            <div class="hours-list" id="hours-list">
+                                <!-- Los horarios se cargarán aquí -->
+                            </div>
+                        </div>
+                        
+                        <div class="add-hour-form">
+                            <h5>Agregar nuevo horario</h5>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="hour-input">Hora (HH:MM)</label>
+                                    <input type="time" id="hour-input" step="1800" value="09:00">
+                                </div>
+                                <button id="add-hour-btn" class="btn-action btn-primary">
+                                    <i class="fas fa-plus"></i> Agregar horario
+                                </button>
+                            </div>
+                            <p class="form-help">Los horarios deben tener al menos 30 minutos de diferencia</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Turnos -->
+            <section id="bookings-section" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-list-alt"></i> Gestión de Turnos</h2>
+                    <p>Visualiza y gestiona todos los turnos reservados</p>
+                </div>
+                
+                <div class="bookings-controls">
+                    <div class="filter-controls">
+                        <div class="form-group">
+                            <label for="filter-date">Filtrar por fecha:</label>
+                            <input type="date" id="filter-date">
+                        </div>
+                        <button id="clear-filter" class="btn-secondary">
+                            <i class="fas fa-times"></i> Limpiar filtro
+                        </button>
+                    </div>
+                    <div class="stats-info">
+                        <p>Total de turnos: <span id="total-bookings">0</span></p>
+                    </div>
+                </div>
+                
+                <div class="bookings-table-container">
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Fecha</th>
+                                <th>Horario</th>
+                                <th>Reservado el</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookings-table-body">
+                            <!-- Los turnos se cargarán aquí -->
+                        </tbody>
+                    </table>
+                    <div id="no-bookings-message" class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>No hay turnos reservados</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección de Configuración -->
+            <section id="settings-section" class="admin-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-cog"></i> Configuración del Sistema</h2>
+                    <p>Ajustes generales de la aplicación</p>
+                </div>
+                
+                <div class="settings-container">
+                    <div class="settings-card">
+                        <h3><i class="fab fa-whatsapp"></i> Configuración de WhatsApp</h3>
+                        <div class="form-group">
+                            <label for="whatsapp-number">Número de WhatsApp</label>
+                            <input type="text" id="whatsapp-number" placeholder="+5491112345678">
+                            <p class="form-help">Número al que se enviarán los mensajes de confirmación</p>
+                        </div>
+                        <button id="save-whatsapp-btn" class="btn-action btn-primary">
+                            <i class="fas fa-save"></i> Guardar número
+                        </button>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Configuración de Ubicación</h3>
+                        <div class="form-group">
+                            <label for="location-address">Dirección del local</label>
+                            <input type="text" id="location-address" placeholder="Av. Corrientes 1234, Buenos Aires">
+                            <p class="form-help">Dirección que aparecerá en Google Maps</p>
+                        </div>
+                        <button id="save-location-btn" class="btn-action btn-primary">
+                            <i class="fas fa-save"></i> Guardar ubicación
+                        </button>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Acciones Peligrosas</h3>
+                        <div class="danger-actions">
+                            <button id="clear-data-btn" class="btn-action btn-danger">
+                                <i class="fas fa-trash"></i> Eliminar todos los datos
+                            </button>
+                            <button id="reset-settings-btn" class="btn-action btn-warning">
+                                <i class="fas fa-redo"></i> Restaurar ajustes por defecto
+                            </button>
+                        </div>
+                        <p class="warning-text">¡Estas acciones no se pueden deshacer!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer del Admin -->
+        <footer class="admin-footer">
+            <p>Starbnails Panel de Administración &copy; <span id="admin-current-year"></span></p>
+            <p class="sync-status">
+                <i class="fas fa-sync"></i> 
+                <span id="sync-status-text">Sincronizado</span>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirmar acción</h3>
+            <p id="modal-message">¿Estás seguro de que quieres realizar esta acción?</p>
+            <div class="modal-actions">
+                <button id="modal-confirm" class="btn-primary">Confirmar</button>
+                <button id="modal-cancel" class="btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../shared/storage.js"></script>
+    <script src="../shared/realtime.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

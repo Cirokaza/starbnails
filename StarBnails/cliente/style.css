@@ -1,0 +1,741 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #ff6b8b;
+    --secondary-color: #9c89b8;
+    --accent-color: #ffd6ff;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+    --disabled-color: #ccc;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+    --transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    color: var(--dark-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.logo h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.logo p {
+    color: var(--secondary-color);
+    font-weight: 300;
+}
+
+.info-banner {
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    box-shadow: var(--shadow);
+}
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.hero h2 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: var(--secondary-color);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Calendar Section */
+.calendar-section, .time-section, .booking-form, .location-section, .instructions {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+}
+
+h3 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h3 i {
+    color: var(--primary-color);
+}
+
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: var(--border-radius);
+}
+
+.calendar-controls h4 {
+    color: var(--dark-color);
+    font-size: 1.3rem;
+}
+
+.calendar-controls button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: var(--transition);
+}
+
+.calendar-controls button:hover {
+    background: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+/* Calendar Grid */
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.weekday {
+    text-align: center;
+    font-weight: 600;
+    color: var(--secondary-color);
+    padding: 10px 0;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    padding: 5px;
+}
+
+.day:hover:not(.empty, .disabled) {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.day-number {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.day-status {
+    font-size: 0.7rem;
+    margin-top: 3px;
+}
+
+.empty {
+    visibility: hidden;
+}
+
+.disabled {
+    background-color: #f5f5f5;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.available {
+    background-color: #e8f5e9;
+    color: var(--dark-color);
+    border-color: var(--success-color);
+}
+
+.selected {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.booked {
+    background-color: #ffebee;
+    color: #666;
+    cursor: not-allowed;
+    border-color: #ffcdd2;
+}
+
+.blocked {
+    background-color: #ffebee;
+    color: #999;
+    cursor: not-allowed;
+    border-color: #ffcdd2;
+}
+
+/* Selected Day Info */
+.selected-day-info {
+    background: #f0f9ff;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--primary-color);
+}
+
+.selected-day-info p {
+    font-weight: 500;
+}
+
+/* Time Slots */
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.time-slot {
+    padding: 15px 10px;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid transparent;
+    font-weight: 500;
+}
+
+.time-slot:hover:not(.unavailable) {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.time-slot.available {
+    background: #e8f5e9;
+    border-color: var(--success-color);
+}
+
+.time-slot.selected {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.time-slot.unavailable {
+    background: #ffebee;
+    color: #999;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+/* Booking Form */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 107, 139, 0.2);
+}
+
+.error-message {
+    color: var(--danger-color);
+    font-size: 0.9rem;
+    margin-top: 5px;
+    min-height: 20px;
+}
+
+.selected-info {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    margin-bottom: 25px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Buttons */
+.form-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-primary, .btn-secondary, .btn-location {
+    padding: 15px 25px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, var(--primary-color), #ff8e9e);
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(45deg, #ff5a7d, var(--primary-color));
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+}
+
+.btn-secondary:hover {
+    background: #f8f9fa;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.btn-location {
+    background: linear-gradient(45deg, #4285f4, #34a853);
+    color: white;
+    margin-top: 15px;
+    max-width: 300px;
+}
+
+.btn-location:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+/* Cooldown Message */
+.cooldown-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.cooldown-content {
+    background: white;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: var(--shadow);
+}
+
+.cooldown-content h3 {
+    color: var(--success-color);
+    margin-bottom: 15px;
+}
+
+.cooldown-content p {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.cooldown-content .small-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 20px;
+}
+
+/* Spinner */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Location & Instructions */
+.location-section {
+    text-align: center;
+}
+
+.instructions ul {
+    list-style-position: inside;
+    padding-left: 10px;
+}
+
+.instructions li {
+    margin-bottom: 10px;
+    padding-left: 10px;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 30px;
+    border-top: 2px solid var(--accent-color);
+    color: var(--secondary-color);
+}
+
+.footer-contact {
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.whatsapp-number {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+#current-year {
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .logo h1 {
+        font-size: 2.2rem;
+    }
+    
+    .calendar {
+        gap: 5px;
+    }
+    
+    .day {
+        padding: 3px;
+    }
+    
+    .day-number {
+        font-size: 1rem;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .hero h2 {
+        font-size: 1.8rem;
+    }
+    
+    h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .calendar-section, .time-section, .booking-form, .location-section, .instructions {
+        padding: 20px 15px;
+    }
+    
+    .time-slots {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cooldown-content {
+        padding: 30px 20px;
+    }
+}
+
+/* Estilos adicionales para WhatsApp */
+
+.checkmark {
+    width: 60px;
+    height: 60px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.whatsapp-message {
+    background: #f0f9ff;
+    border: 1px solid #b3e0ff;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    font-family: monospace;
+    white-space: pre-line;
+    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+}
+
+.whatsapp-button {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    max-width: 300px;
+}
+
+.whatsapp-button:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-button i {
+    font-size: 1.3rem;
+}
+
+/* Mejorar el mensaje de cooldown */
+.cooldown-content h3 {
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.cooldown-content p {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.cooldown-content .small-text {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 15px;
+}
+
+/* Agregar al final del archivo client/style.css */
+
+/* Estilos para el mensaje de WhatsApp */
+.whatsapp-button {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    max-width: 300px;
+}
+
+.whatsapp-button:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.checkmark {
+    width: 60px;
+    height: 60px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Estilos para admin */
+.status-blocked {
+    color: #dc3545;
+    background: #f8d7da;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.status-open {
+    color: #28a745;
+    background: #d4edda;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.status-closed {
+    color: #6c757d;
+    background: #e2e3e5;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.booking-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.booking-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.booking-list li:hover {
+    background: #f8f9fa;
+}
+
+.no-hours {
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
+}
