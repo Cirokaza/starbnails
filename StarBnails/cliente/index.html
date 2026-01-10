@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starbnails - Reserva de Turnos</title>
+
+    <!-- CSS con rutas absolutas -->
+    <link rel="stylesheet" href="/cliente/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <h1><i class="fas fa-spa"></i> Starbnails</h1>
+                <p>Salón de uñas premium</p>
+            </div>
+            <div class="info-banner">
+                <p><i class="fas fa-clock"></i> Turnos online</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <section class="hero">
+                <h2>Reserva tu turno</h2>
+                <p>Elige la fecha y horario que más te convenga para tu servicio de uñas</p>
+            </section>
+
+            <!-- Calendar Section -->
+            <section class="calendar-section">
+                <h3><i class="far fa-calendar-alt"></i> Selecciona una fecha</h3>
+                <div class="calendar-controls">
+                    <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                    <h4 id="current-month">Mes actual</h4>
+                    <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar" id="calendar"></div>
+                <div class="selected-day-info" id="selected-day-info">
+                    <p>Selecciona un día en el calendario</p>
+                </div>
+            </section>
+
+            <!-- Time Slots Section -->
+            <section class="time-section" id="time-section" style="display: none;">
+                <h3><i class="far fa-clock"></i> Horarios disponibles</h3>
+                <div class="time-slots" id="time-slots">
+                    <p>No hay horarios disponibles para este día</p>
+                </div>
+            </section>
+
+            <!-- Booking Form -->
+            <section class="booking-form" id="booking-form" style="display: none;">
+                <h3><i class="far fa-edit"></i> Completa tus datos</h3>
+                <form id="reservation-form">
+                    <div class="form-group">
+                        <label for="client-name"><i class="fas fa-user"></i> Nombre completo</label>
+                        <input type="text" id="client-name" placeholder="Ingresa tu nombre" required>
+                        <div class="error-message" id="name-error"></div>
+                    </div>
+
+                    <div class="selected-info">
+                        <div class="info-item">
+                            <span><i class="fas fa-calendar-day"></i> Fecha seleccionada:</span>
+                            <span id="selected-date-display">--/--/----</span>
+                        </div>
+                        <div class="info-item">
+                            <span><i class="fas fa-clock"></i> Horario seleccionado:</span>
+                            <span id="selected-time-display">--:--</span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="submit-btn" class="btn-primary">
+                            <i class="fas fa-calendar-check"></i> Reservar turno
+                        </button>
+                        <button type="button" id="reset-btn" class="btn-secondary">
+                            <i class="fas fa-redo"></i> Cambiar selección
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Cooldown Message -->
+            <section class="cooldown-message" id="cooldown-message" style="display: none;">
+                <div class="cooldown-content">
+                    <div class="spinner"></div>
+                    <h3>Turno reservado con éxito</h3>
+                    <p>Redirigiendo a WhatsApp en <span id="countdown">5</span> segundos...</p>
+                    <p class="small-text">No cierres esta ventana</p>
+                </div>
+            </section>
+
+            <!-- Location Section -->
+            <section class="location-section">
+                <h3><i class="fas fa-map-marker-alt"></i> Nuestra ubicación</h3>
+                <p>Ven a visitarnos en nuestro salón</p>
+                <button id="location-btn" class="btn-location">
+                    <i class="fas fa-map-marked-alt"></i> Ver en Google Maps
+                </button>
+            </section>
+
+            <!-- Instructions -->
+            <section class="instructions">
+                <h4><i class="fas fa-info-circle"></i> Instrucciones importantes</h4>
+                <ul>
+                    <li>La reserva se confirma aboniando la seña por transferencia</li>
+                    <li>Se permite reprogramar con 24 horas de anticipación</li>
+                    <li>Llegar puntual para no perder el turno</li>
+                    <li>Traer barbijo y respetar protocolos sanitarios</li>
+                </ul>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>Starbnails &copy; <span id="current-year"></span> | Salón de uñas</p>
+            <p class="footer-contact">
+                <i class="fab fa-whatsapp"></i> 
+                <!-- NÚMERO ACTUALIZADO -->
+                <span class="whatsapp-number">+54 9 3804 94-9550</span>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scripts con rutas ABSOLUTAS para GitHub Pages -->
+    <script src="/shared/storage.js"></script>
+    <script src="/shared/realtime.js"></script>
+    <script src="/cliente/script.js"></script>
+</body>
+</html>
